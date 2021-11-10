@@ -18,6 +18,7 @@ RUN apt-get update && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL
     && /bin/bash /tmp/library-scripts/docker-in-docker-debian.sh "true" "${USERNAME}" "${USE_MOBY}" \
     && /bin/bash /tmp/library-scripts/kubectl-helm-debian.sh "latest" "latest" "latest" \
     && mkdir -p /home/${USERNAME}/.minikube \
+    && mkdir -p /home/${USERNAME}/.aws \
     && chown ${USERNAME} /home/${USERNAME}/.minikube \
     && curl -sL https://raw.githubusercontent.com/crossplane/crossplane/release-1.5/install.sh | sh \
     && mv kubectl-crossplane /usr/local/bin \

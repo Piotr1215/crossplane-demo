@@ -11,4 +11,4 @@ helm install crossplane --namespace crossplane-system crossplane-stable/crosspla
 
 helm list -n crossplane-system
 
-kubectl get all -n crossplane-system
+kubectl crossplane install configuration registry.upbound.io/xp/getting-started-with-aws:v1.5.0

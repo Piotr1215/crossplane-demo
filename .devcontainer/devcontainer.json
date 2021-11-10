@@ -7,6 +7,7 @@
 	"mounts": [
 		"source=minikube-var-lib-docker,target=/var/lib/docker,type=volume",
 		"source=minikube-config,target=/home/vscode/.minikube,type=volume",
+		"source=${localEnv:HOME}/.aws,target=/home/vscode/.aws,type=bind,consistency=cached"
 	],
 	"overrideCommand": false,
 
@@ -28,10 +29,9 @@
 
 	// Use 'postStartCommand' to run commands after the container is created like starting minikube.
 	// "postStartCommand": "nohup bash -c 'minikube start &' > minikube.log 2>&1",
-    "postStartCommand": "nohup bash -c 'minikube start &' > minikube.log 2>&1",
+    "postStartCommand": "nohup bash -c 'minikube start &' > minikube.log 2>&1 && AWS_PROFILE=default && echo -e '[default]\naws_access_key_id = $(aws configure get aws_access_key_id --profile $AWS_PROFILE)\naws_secret_access_key = $(aws configure get aws_secret_access_key --profile $AWS_PROFILE)' > creds.conf",
 	// Minikube does not like running as root, so use a non-root user.
 	"remoteUser": "vscode",
 	"features": {
-		"azure-cli": "latest"
 	}
 }
