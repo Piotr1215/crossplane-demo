@@ -23,7 +23,10 @@ All components from the [crossplane installation](https://crossplane.io/docs/v1.
 The components are:
 - Kubernetes minikube
 - Helm
+- kubectl
 - Crossplane CLI
+- AWS CLI
+- Azure CLI
 
 > Crossplane should be installed in a *crossplane-system* namespace, if not please run `.devcontainer/library-scripts/setup-crossplane.sh`
 

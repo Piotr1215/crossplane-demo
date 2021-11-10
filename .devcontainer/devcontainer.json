@@ -30,5 +30,8 @@
 	// "postStartCommand": "nohup bash -c 'minikube start &' > minikube.log 2>&1",
     "postStartCommand": "nohup bash -c 'minikube start &' > minikube.log 2>&1",
 	// Minikube does not like running as root, so use a non-root user.
-	"remoteUser": "vscode"
+	"remoteUser": "vscode",
+	"features": {
+		"azure-cli": "latest"
+	}
 }

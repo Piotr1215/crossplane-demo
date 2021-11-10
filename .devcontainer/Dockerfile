@@ -21,6 +21,9 @@ RUN apt-get update && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL
     && chown ${USERNAME} /home/${USERNAME}/.minikube \
     && curl -sL https://raw.githubusercontent.com/crossplane/crossplane/release-1.5/install.sh | sh \
     && mv kubectl-crossplane /usr/local/bin \
+    && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
 
 VOLUME [ "/var/lib/docker" ]
