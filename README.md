@@ -85,7 +85,7 @@ The scenario flow:
 - install crossplane on a local cluster :white_check_mark:
 - deploy and configure AWS provider :white_check_mark:
 - expose composites to the developers
-- developers deploy and manage the life-cycle of dev/test clusters in AZURE and AWS
+- developers deploy and manage the life-cycle of dev/test clusters in AWS
 - manage composites lifecycle
 
 ### Demo Setup
@@ -101,6 +101,12 @@ The components are:
 - AWS CLI
 
 > Crossplane should be installed in a _crossplane-system_ namespace, if not please run `.devcontainer/library-scripts/setup-crossplane.sh`
+
+#### Observability
+
+To visualize CRDs use [Octant](https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-1AEDB285-C965-473F-8C91-75724200D444.html); a VMWare open source cluster visualizer, running in a browser so no in-cluster installation is required.
+
+If you like terminal tools more, [k9s](https://k9scli.io/) got you covered.
 
 #### AWS provider
 
@@ -118,7 +124,17 @@ From there onwards you should be able to follow along with the demo from Crosspl
 
 ### Deploy RDS Instance
 
+First let's deploy an RDS Instance, which is an AWS managed resource and belongs to the AWS provider. See [crossplane components diagram](#crossplane-components).
+
+`kubectl create -f rds-instance.yaml`
+
+RDSInstance is just a Kubernetes resource like pod, service or replicaSet. You can check the deployment progress in Octant or command line: `watch kubectl get RDSInstance`
+
 ### Deploy EKS Cluster
+
+EKS Cluster deployment status:
+
+![k8s-cluster-deploying](media/k8s-cluster-deploying.png)
 
 #### Retrieve kubeconfig details
 
