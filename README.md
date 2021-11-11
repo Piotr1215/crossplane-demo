@@ -10,44 +10,56 @@ Below diagram shows crossplane component model and its basic intetactions.
 
 ```plantuml
 @startuml crossplane-components
-!theme reddress-darkblue
+!theme vibrant
 skinparam defaultTextAlignment center
 skinparam LineType poly
-skinparam componentStyle rectangle
+skinparam componentStyle uml1
+skinparam component {
+    BackgroundColor<<API>> #ccff66
+}
 
 'left to right direction
 
 interface "HTTPS" as k8s_to_cloud
 
 actor "Dev Team" as devs
-
+together {
 component "Composite Resource" <<API>> as composite_resource
 component "Composite Resource\nClaim" <<API>> as claim
 
-cloud "Cloud Provider" as cloud {
-     [External Resources]
-}
-
-package "Configuration" as Package {
+note top of claim
+The schema of composite
+resources and claims is custom designed
+end note
+package "Configuration" as config {
      component "Composition" <<API>> as composition
      component "Composite Resource\nDefinition" <<API>>  as crd
 }
+  package "Provider" as provider {
+  component "Managed Resources" as managed_resources
 
-package "Provider" as provider {
+ }
+ }
+cloud "Cloud Provider" as cloud {
+  [External Resources]
+ }
 
-     component "Managed Resources" as managed_resources
-
-}
 
 devs -> claim : Use Claim to create cloud resource
-composition ---- composite_resource : Defines how to create a composite resource
-claim --> composite_resource : Claims
-crd -> composite_resource : Define new
-crd --> claim : Define new
-crd <-- managed_resources : Compose of
-'managed_resources <-> [External Resources] : Represent
+composition --> composite_resource : Defines how to create\na composite resource
+claim <-d- composite_resource : Claims
+crd -> composite_resource : Defines
+crd --> claim : Defines
+crd <- managed_resources : Compose of
 managed_resources -- k8s_to_cloud
-k8s_to_cloud - [External Resources]
+k8s_to_cloud -r- [External Resources]
+
+legend
+    |= Type |= Description |
+    |  <<API>>  |  Crossplane API resource in K8s  |
+    | <color:DarkGreen><$osa_user_green_operations*.4></color> | Ivan details... |
+endlegend
+
 @enduml
 ```
 
@@ -103,6 +115,22 @@ Next step is to configure Crossplane to access AWS and create resources, we will
 and now, install AWS provider on the cluster `kubectl apply -f https://raw.githubusercontent.com/crossplane/crossplane/release-1.5/docs/snippets/configure/aws/providerconfig.yaml`
 
 From there onwards you should be able to follow along with the demo from Crossplane's web page.
+
+### Deploy RDS Instance
+
+### Deploy EKS Cluster
+
+#### Retrieve kubeconfig details
+
+```bash
+kubectl get secrets --namespace devops-team cluster \
+     --output jsonpath="{.data.kubeconfig}" \
+     | base64 --decode | tee eks-config.yaml
+
+export KUBECONFIG=$PWD/eks-config.yaml
+```
+
+Remember to `unset KUBECONFIG` to get your old config back
 
 ## Conclusion
 

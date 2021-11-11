@@ -1,4 +1,4 @@
-apiVersion: devopstoolkitseries.com/v1alpha1
+apiVersion: crossplanedemo.com/v1alpha1
 kind: CompositeKubernetesCluster
 metadata:
   name: devops-team
