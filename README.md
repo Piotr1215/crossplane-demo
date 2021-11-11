@@ -4,17 +4,64 @@
 
 [Crossplane Slides](https://slides.com/decoder/crossplane)
 
+## Crossplane Components
+
+Below diagram shows crossplane component model and its basic intetactions.
+
+```plantuml
+@startuml crossplane-components
+!theme reddress-darkblue
+skinparam defaultTextAlignment center
+skinparam LineType poly
+skinparam componentStyle rectangle
+
+'left to right direction
+
+interface "HTTPS" as k8s_to_cloud
+
+actor "Dev Team" as devs
+
+component "Composite Resource" <<API>> as composite_resource
+component "Composite Resource\nClaim" <<API>> as claim
+
+cloud "Cloud Provider" as cloud {
+     [External Resources]
+}
+
+package "Configuration" as Package {
+     component "Composition" <<API>> as composition
+     component "Composite Resource\nDefinition" <<API>>  as crd
+}
+
+package "Provider" as provider {
+
+     component "Managed Resources" as managed_resources
+
+}
+
+devs -> claim : Use Claim to create cloud resource
+composition ---- composite_resource : Defines how to create a composite resource
+claim --> composite_resource : Claims
+crd -> composite_resource : Define new
+crd --> claim : Define new
+crd <-- managed_resources : Compose of
+'managed_resources <-> [External Resources] : Represent
+managed_resources -- k8s_to_cloud
+k8s_to_cloud - [External Resources]
+@enduml
+```
+
 ## Demo Scenario
 
 ### Prerequisites
 
-To follow along, you will need subscription to AWS and Azure and respective CLIs configured on your local machine.
+To follow along, you will need subscription to AWS and CLI configured on your local machine.
 
 Credenials for accessing cloud enviroments and deploying the infrastructure will be mapped from mouonted volumes.
 
 Locally installed you will need:
 
-- VS Code with Kubernetes and Docker plugins
+- VS Code with remote contianers devcontainer plugin
 - WSL2 if using Windows
 
 ### Scenario Description
@@ -24,7 +71,7 @@ The demo scenario highlights Crossplane's composite functionality. Using composi
 The scenario flow:
 
 - install crossplane on a local cluster :white_check_mark:
-- deploy and configure AWS provider
+- deploy and configure AWS provider :white_check_mark:
 - expose composites to the developers
 - developers deploy and manage the life-cycle of dev/test clusters in AZURE and AWS
 - manage composites lifecycle
@@ -54,6 +101,8 @@ Next step is to configure Crossplane to access AWS and create resources, we will
 `kubectl create secret generic aws-creds -n crossplane-system --from-file=creds=./creds.conf`
 
 and now, install AWS provider on the cluster `kubectl apply -f https://raw.githubusercontent.com/crossplane/crossplane/release-1.5/docs/snippets/configure/aws/providerconfig.yaml`
+
+From there onwards you should be able to follow along with the demo from Crossplane's web page.
 
 ## Conclusion
 
