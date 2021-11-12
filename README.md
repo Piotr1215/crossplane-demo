@@ -4,7 +4,11 @@
 
 [Crossplane Slides](https://slides.com/decoder/crossplane)
 
-## Crossplane Components
+## Crossplane Architecture
+
+Crossplane is architected to fit K8s resource model.
+
+### Components
 
 Below diagram shows crossplane component model and its basic intetactions.
 
@@ -18,7 +22,8 @@ Below diagram shows crossplane component model and its basic intetactions.
 
 'Design
 skinparam defaultTextAlignment center
-skinparam LineType poly
+'skinparam LineType ortho
+'skinparam nodesep 300
 skinparam componentStyle uml1
 skinparam component {
     BackgroundColor<<API>> $api_color
@@ -49,6 +54,9 @@ end note
 
 package "Configuration" as config {
      component "Composition" <<API>> as composition
+     note top of composition
+      Composition links XR and managed resources
+     end note
      component "Composite Resource\nDefinition (XRD)" <<API>> as crd
 }
   package "Provider" as provider {
