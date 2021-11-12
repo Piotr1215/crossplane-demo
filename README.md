@@ -13,24 +13,24 @@ Crossplane is architected to fit K8s resource model.
 Below diagram shows crossplane component model and its basic intetactions.
 
 ```plantuml
-@startuml crossplane-components
+@startuml
 !theme vibrant
 
 'Variables
 !$api_color = "#f3807b"
 !$resource_color = "#fdcd3c"
 
-'Design
+'Global design parameters
 skinparam defaultTextAlignment center
-'skinparam LineType ortho
-'skinparam nodesep 300
 skinparam componentStyle uml1
-!pragma horizontalLineBetweenDifferentPackageAllowed
+skinparam CollectionsBackgroundColor $resource_color
+
+'Stereotypes modelling
+skinparam NoteBackgroundColor #35d0ba
 skinparam component {
     BackgroundColor<<API>> $api_color
     Shadowing<<API>> true
 }
-skinparam CollectionsBackgroundColor $resource_color
 skinparam component {
     BackgroundColor<<RESOURCE>> $resource_color
     Shadowing<<RESOURCE>> true
@@ -38,19 +38,19 @@ skinparam component {
 skinparam legend {
     BackgroundColor Azure
 }
-skinparam NoteBackgroundColor #35d0ba
-'left to right direction
 
+'Declare members
 interface "HTTPS" as k8s_to_cloud
 
 actor "Dev Team" as devs
+
 together {
 component "Composite Resource\nClaim (XRC)" <<API>> as claim
 component "Composite Resource (XR)" <<API>> as composite_resource
 
 note top of claim
     The schema of composite
-    resources and claims is custom designed
+    resources and claims are custom designed
 end note
 
 package "Configuration" as config {
@@ -69,6 +69,7 @@ cloud "Cloud Provider" as cloud {
    collections "External Resources" <<RESOURCE>>
 }
 
+'Declare relationships
 devs -> claim : Use Claim to create cloud resource
 composition --> composite_resource : Defines how to create\na composite resource
 claim <-d- composite_resource : Claims
@@ -89,7 +90,6 @@ legend
     |= Composite Resoource (XR) |  A composite resource can be thought of as the interface to a Composition. It provides the\n  inputs a Composition uses to compose resources into a higher level concept.  |
     |= Composite Resoource Claim (XRC)     |  Allows for consuming (claiming) the resouorces created by the composite resource.\n  XRC is to XR what PVC is to PV in Kubernetes speak.   |
 endlegend
-
 @enduml
 ```
 
