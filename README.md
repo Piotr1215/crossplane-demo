@@ -12,7 +12,7 @@ Crossplane is architected to fit K8s resource model.
 
 Below diagram shows crossplane component model and its basic intetactions.
 
-![Crossplane Components](http://www.plantuml.com/plantuml/proxy?cache=yes&src=https://raw.githubusercontent.com/Piotr1215/crossplane-demo/master/diagrams/crossplane-components&fmt=svg)
+![Crossplane Components](http://www.plantuml.com/plantuml/proxy?cache=yes&src=https://raw.githubusercontent.com/Piotr1215/crossplane-demo/master/diagrams/crossplane-components.puml&fmt=svg)
 
 ## Demo Scenario
 
