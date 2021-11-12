@@ -11,53 +11,74 @@ Below diagram shows crossplane component model and its basic intetactions.
 ```plantuml
 @startuml crossplane-components
 !theme vibrant
+
+'Variables
+!$api_color = "#f3807b"
+!$resource_color = "#fdcd3c"
+
+'Design
 skinparam defaultTextAlignment center
 skinparam LineType poly
 skinparam componentStyle uml1
 skinparam component {
-    BackgroundColor<<API>> #ccff66
+    BackgroundColor<<API>> $api_color
+    Shadowing<<API>> true
 }
-
+skinparam CollectionsBackgroundColor $resource_color
+skinparam component {
+    BackgroundColor<<RESOURCE>> $resource_color
+    Shadowing<<RESOURCE>> true
+}
+skinparam legend {
+    BackgroundColor Azure
+}
+skinparam NoteBackgroundColor #35d0ba
 'left to right direction
 
 interface "HTTPS" as k8s_to_cloud
 
 actor "Dev Team" as devs
 together {
-component "Composite Resource" <<API>> as composite_resource
-component "Composite Resource\nClaim" <<API>> as claim
+component "Composite Resource\nClaim (XRC)" <<API>> as claim
+component "Composite Resource (XR)" <<API>> as composite_resource
 
 note top of claim
-The schema of composite
-resources and claims is custom designed
+    The schema of composite
+    resources and claims is custom designed
 end note
+
 package "Configuration" as config {
      component "Composition" <<API>> as composition
-     component "Composite Resource\nDefinition" <<API>>  as crd
+     component "Composite Resource\nDefinition (XRD)" <<API>> as crd
 }
   package "Provider" as provider {
-  component "Managed Resources" as managed_resources
+      collections "Managed Resources" <<RESOURCE>> as managed_resources
+     }
+}
 
- }
- }
 cloud "Cloud Provider" as cloud {
-  [External Resources]
- }
-
+   collections "External Resources" <<RESOURCE>>
+}
 
 devs -> claim : Use Claim to create cloud resource
 composition --> composite_resource : Defines how to create\na composite resource
 claim <-d- composite_resource : Claims
 crd -> composite_resource : Defines
 crd --> claim : Defines
-crd <- managed_resources : Compose of
+composite_resource -> managed_resources : Composes
 managed_resources -- k8s_to_cloud
 k8s_to_cloud -r- [External Resources]
 
 legend
     |= Type |= Description |
-    |  <<API>>  |  Crossplane API resource in K8s  |
-    | <color:DarkGreen><$osa_user_green_operations*.4></color> | Ivan details... |
+    |= <color:$api_color><<API>> |  Crossplane API resource in K8s.  |
+    |= <color:$resource_color><<RESOURCE>> |  Granular, high fidelity Crossplane representations\n  of a resource in an external system and actual cloud resource. |
+    |= Provider  |  Extends Crossplane by installing controllers for new kinds of managed resources. |
+    |= Configuration   |  Extends Crossplane by installing conceptually related groups of XRDs and\n  Compositions, as well as dependencies like providers or further configurations.  |
+    |= Composition   |  Configures how Crossplane should compose resources into a higher level “composite resource”.   |
+    |= Composite Resoource Definition (XRD)  |  Is the API type used to define new types of composite resources and claims.\n  XRD is to XR what CRD is to CR in Kubernetes speak. |
+    |= Composite Resoource (XR) |  A composite resource can be thought of as the interface to a Composition. It provides the\n  inputs a Composition uses to compose resources into a higher level concept.  |
+    |= Composite Resoource Claim (XRC)     |  Allows for consuming (claiming) the resouorces created by the composite resource.\n  XRC is to XR what PVC is to PV in Kubernetes speak.   |
 endlegend
 
 @enduml
@@ -124,7 +145,8 @@ From there onwards you should be able to follow along with the demo from Crosspl
 
 ### Deploy RDS Instance
 
-First let's deploy an RDS Instance, which is an AWS managed resource and belongs to the AWS provider. See [crossplane components diagram](#crossplane-components).
+First let's deploy an RDS Instance, which is an AWS managed resource and comes with the AWS provider.
+See [crossplane components diagram](#crossplane-components).
 
 `kubectl create -f rds-instance.yaml`
 
