@@ -25,6 +25,7 @@ skinparam defaultTextAlignment center
 'skinparam LineType ortho
 'skinparam nodesep 300
 skinparam componentStyle uml1
+!pragma horizontalLineBetweenDifferentPackageAllowed
 skinparam component {
     BackgroundColor<<API>> $api_color
     Shadowing<<API>> true
@@ -63,8 +64,8 @@ package "Configuration" as config {
       collections "Managed Resources" <<RESOURCE>> as managed_resources
      }
 }
-
 cloud "Cloud Provider" as cloud {
+
    collections "External Resources" <<RESOURCE>>
 }
 
@@ -73,7 +74,7 @@ composition --> composite_resource : Defines how to create\na composite resource
 claim <-d- composite_resource : Claims
 crd -> composite_resource : Defines
 crd --> claim : Defines
-composite_resource -> managed_resources : Composes
+composite_resource .r. managed_resources : Composes
 managed_resources -- k8s_to_cloud
 k8s_to_cloud -r- [External Resources]
 
@@ -111,11 +112,15 @@ The demo scenario highlights Crossplane's composite functionality. Using composi
 
 The scenario flow:
 
+- explain basic Crossplane concepts and achitecture
 - install crossplane on a local cluster :white_check_mark:
 - deploy and configure AWS provider :white_check_mark:
-- expose composites to the developers
-- developers deploy and manage the life-cycle of dev/test clusters in AWS
-- manage composites lifecycle
+- showcase basic functionality by deploying RDS
+- showcase more complex functionality by deploying EKS
+  - based on EKS example, show how developers can quickly deploy an EKS cluster
+- manage composition lifecycle by changing something in the XRC and reapplying to a cluster
+- write a very simple composition for EC2 with VPC with port 22 open
+- highlight Crossplane benefits, expecially in the context of Platform team
 
 ### Demo Setup
 
@@ -176,10 +181,8 @@ kubectl get secrets --namespace devops-team cluster \
 export KUBECONFIG=$PWD/eks-config.yaml
 ```
 
-Remember to `unset KUBECONFIG` to get your old config back
+Remember to `unset KUBECONFIG` or source bash/zshrc to get your old config back.
 
 ## Conclusion
 
 ## TODO
-
-- [ ] Should be moved to Infrastructure sub group once it's created.
