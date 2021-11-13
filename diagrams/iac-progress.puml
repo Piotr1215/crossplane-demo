@@ -1,0 +1,30 @@
+@startgantt
+!theme materia
+<style>
+ganttDiagram {
+  timeline {
+    LineColor transparent
+    FontColor transparent
+ }
+}
+</style>
+
+hide footbox
+-- 1990: Virtualization --
+[Imperative configuration] lasts 10 days
+[Scripting] happens at [Imperative configuration]'s end
+-- 2000: IaC(ode) --
+[Declarative Configuration] lasts 10 days
+[Declarative Configuration] starts at [Imperative configuration]'s end
+
+[Configuration Management] happens at [Declarative Configuration]'s end
+[Automated Provisioning] happens at [Declarative Configuration]'s end
+
+-- 2020: IaS(sevice) --
+[Declarative APIs] lasts 10 days
+[Declarative APIs] starts at [Declarative Configuration]'s end
+
+[Self-Sevice]
+Improved Governance
+Flexible shared responsibility model
+@endgantt
