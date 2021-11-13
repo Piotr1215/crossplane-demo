@@ -44,6 +44,8 @@ Before we move on to the next part of the blog, a little disclaimer. Choosing co
 What makes Crossplane so special? First it builds on Kubernetes and capitalizes on the fact that the real power of Kubernetes is its powerfull API model and control plane logic (control loops).
 It also moves away from Infrastructure as Code to Infrastructure as Data. The difference is that IaC means writing code to describe how the provisioning should happen, whereas IaD means writing pure data files (in case of Kubernetes YAML) and submitting them to control component (in case of Kubernetes an operator) to encapsulate and execute the provisioning logic.
 
+For me, the best part about Crossplane is that it seemlesly enables colloboration between Application Teams and Platform Teams, by leveraging [Kubernetes Control](https://containerjournal.com/kubeconcnc/kubernetes-true-superpower-is-its-control-plane/) Plane as the convergance point where everyone meets.
+
 ### Components
 
 Let's look how Crossplane component model look like. A word of warrning, if you are new to Kubernetes this might be overwhelming, but there is value in making an effort to understand it. Below diagram shows crossplane component model and its basic intetactions.
