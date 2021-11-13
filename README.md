@@ -1,16 +1,52 @@
-# Crossplane POC
+# Infrastructure as Code: the next paradigm shift 
 
-## Introduction Presentation
 
-[Crossplane Slides](https://slides.com/decoder/crossplane)
+## Introduction 
+
+In this blog we will look at the evolution of software infrastructure; provisioning, delivery and maintenance.
+
+If you are interested in modern DevOps and SRE practices, this article is for you.
+
+**Infrastructure as Code (IaC)** is a common pattern where virtualized infrastructure and auxiliary services can be managed using configuration expressed in almost any language, usually hosted in a source code repository.
+
+Every once in a while software industry is shaped by significant events called [Paradigm Shift](https://en.wikipedia.org/wiki/Paradigm_shift). Here are a few such events that made Infrastructure as Code possible:
+
+- Virtualization
+- Containarisation and containers orchestration
+- Public Cloud Infrastructure
+- DevOps Culture
+
+Let's examine how each wave of changes shaped the software landscape:
+
+In the early days of virtualizaiton, developers would produce software in long watefall development cycles, mostly based on requirements documentation. Ops Teams in the same time would rack and stack servers, provision infrastucture components, install all the things, configure etc etc. Typically both teams would work in a disconnected fashoin, opening tickets and communicating via long email chains. Those were the darg ages. 
+
+![Old Days](media/old-days.png)
+
+Next came agile revolution and with it beginning of the DevOps culture. Now developers would actually send the application over to the Ops Team along with multi-page configuraiton manual. More progressive teams will start collaborating on automation tools. In the early days of infrastructure automation tools like Chef or Puppet were very popular. Huge improvement, but often very siloed environment and fragmented responsibilities.
+
+![Bridge DevOps](media/Bridge.sketchpad.png)
+
+Along with increased usage of public cloud and more robust automation, things started to fall into right places. The tool of choice for most of the OPS Teams was terraform. Compared to the situation from a few years ago, this is a huge progress. The amount of infrastructure created grows exponentially. 
+
+For a long time, this picture is almost perfect... almost. So what is missing? Well, the experience for both Dev and Ops falls a bit short. Meticulously created infrasturcture starts to drift, requires a lot of effort and maintenance overhead. Developers on the other hand must learn new languages and struggle to incorporate the Ops tooling into their workflows. 
+Community rallies around and comes up with all kinds of creative solutions, drift detection, more autmation, observability etc. All those tools and projects are great, but not really standardised.
+
+How to improve already good process? How to make one more leap to make somehting good, great? Answer came, like most good ansewers, from within the community itself. Remember how we talked about paradigm shifts? One of them was containerization and containers orchestration, this enabled **standardization** of to lesser extent packaging (contianer images) and runtime (Kubernetes pods) concerns. Now we have all the standards and tools at our fingertips, just one final touch needed to make it work seemlesly together. Here is how, IMO, [Crossplane](https://crossplane.io/) is the missing link in the infrastructure as code evolution.
+
+> The power of Crossplane comes from using cloud native open standards and most popular tools to enable Developers (aka Application Teams) and Ops (aka Platform Teams) to work together, but without depending on each other.
+
+![Crossplane](media/Final_Stage.png)
+
+Before we move on to the next part of the blog, a little disclaimer. Choosing cows and pinguines to represent developers and ops respectively, was based purely on the cuteness level of the animal.
 
 ## Crossplane Architecture
 
-Crossplane is architected to fit K8s resource model.
+What makes Crossplane so special? First it builds on Kubernetes and capitalizes on the fact that the real power of Kubernetes is its powerfull API model and control plane logic (control loops).
+It also moves away from Infrastructure as Code to Infrastructure as Data. The difference is that IaC means writing code to describe how the provisioning should happen, whereas IaD means writing pure data files (in case of Kubernetes YAML) and submitting them to control component (in case of Kubernetes an operator) to encapsulate and execute the provisioning logic.
 
 ### Components
 
-Below diagram shows crossplane component model and its basic intetactions.
+Let's look how Crossplane component model look like. A word of warrning, if you are new to Kubernetes this might be overwhelming, but there is value in making an effort to understand it. Below diagram shows crossplane component model and its basic intetactions.
 
 ![Crossplane Components](http://www.plantuml.com/plantuml/proxy?cache=yes&src=https://raw.githubusercontent.com/Piotr1215/crossplane-demo/master/diagrams/crossplane-components.puml&fmt=svg)
 
