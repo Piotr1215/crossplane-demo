@@ -1,6 +1,5 @@
 # Infrastructure as Code: the next paradigm shift 
 
-
 ## Introduction 
 
 In this blog we will look at the evolution of software infrastructure; provisioning, delivery and maintenance.
@@ -71,15 +70,10 @@ The demo scenario highlights Crossplane's composite functionality. Using composi
 
 The scenario flow:
 
-- explain basic Crossplane concepts and achitecture
-- install crossplane on a local cluster :white_check_mark:
-- deploy and configure AWS provider :white_check_mark:
-- showcase basic functionality by deploying RDS
-- showcase more complex functionality by deploying EKS
-  - based on EKS example, show how developers can quickly deploy an EKS cluster
-- manage composition lifecycle by changing something in the XRC and reapplying to a cluster
+- deploy RDS
+- deploy EKS
+- manage resources lifecycle
 - write a very simple composition for EC2 with VPC with port 22 open
-- highlight Crossplane benefits, expecially in the context of Platform team
 
 ### Demo Setup
 
@@ -113,7 +107,7 @@ Next step is to configure Crossplane to access AWS and create resources, we will
 
 and now, install AWS provider on the cluster `kubectl apply -f https://raw.githubusercontent.com/crossplane/crossplane/release-1.5/docs/snippets/configure/aws/providerconfig.yaml`
 
-From there onwards you should be able to follow along with the demo from Crossplane's web page.
+From there onwards you should be able to follow along with the demos from [Crossplane's web page](https://crossplane.io/docs/v1.5/getting-started/provision-infrastructure.html).
 
 ### Deploy RDS Instance
 
@@ -124,7 +118,48 @@ See [crossplane components diagram](#crossplane-components).
 
 RDSInstance is just a Kubernetes resource like pod, service or replicaSet. You can check the deployment progress in Octant or command line: `watch kubectl get RDSInstance`
 
+Delete the instance with `kubectl delete -f rds-instance.yaml`
+
 ### Deploy EKS Cluster
+
+Deploying EKS cluster with automation is not a trivial task, there are are lot of components that need to be created along, like VPCs, subnets, IAM Roles, node pools, route tables, gateways...
+This is not the experience developers want, but this complexity must go somewhere, there is no magic "Remove complexity" button!
+
+As we've seen in the component diagram, the process starts with building an XRD (Composite Resource Definition) where we can specify:
+
+- schema of the XR (Composite Resource)
+- schema of the XRC (Composite Resource Claim)
+
+To help visualize how complex the configuration can be, here is a diagram representing the EKS Composition. This complexity is managed by Platform Team, folks that specialize in both Kubernetes and Cloud Providers.
+
+![Composition-YAML](media/Composition-YAML.png)
+
+Now with this complexity hidden, developers are getting this:
+
+![Claim-YAML](media/Claim-YAML.png)
+
+```yaml
+apiVersion: crossplanedemo.com/v1alpha1
+kind: CompositeKubernetesCluster
+metadata:
+  name: devops-team
+  labels:
+    cluster-owner: piotrzan
+spec:
+  compositionRef:
+    # Possible values cluster-google, cluster-azure, cluster-aws
+    name: cluster-aws
+  parameters:
+    # Possible values small, medium, large
+    nodeSize: small
+    # version: "1.20"
+    # minNodeCount: 2
+  writeConnectionSecretToRef:
+    namespace: devops-team
+    name: cluster
+```
+
+Deploying cluster is very easy, just `kubectl create -f ./aws`
 
 EKS Cluster deployment status:
 
@@ -140,8 +175,33 @@ kubectl get secrets --namespace devops-team cluster \
 export KUBECONFIG=$PWD/eks-config.yaml
 ```
 
+From here you can use the cluster like your normal EKS.
+
 Remember to `unset KUBECONFIG` or source bash/zshrc to get your old config back.
+
+#### Cleanup
+
+Delete EKS and accompanying resources `kubectl delete -f ./aws`
+Exit VS Code which will stop the contianer. You can further clean unused containers and images by `docker system prune --all`.
 
 ## Conclusion
 
-## TODO
+We have seen how Crossplane can help make infrastructure provisioning and management easier. Here are a few benefits I would like to highlight.
+
+- Composable Infrastructure
+- Self-Service
+- Increased Automation
+- Standardized collaboration
+- Ubiquitous language (K8s API) 
+
+What I like most about Crossplane is that it's build with the DevOps culture in mind by promoting loosly coupled collaboration between Applications Teams and Platform Teams. The resource model, packaging, configuration are well thought out.
+
+There are also a few challenges to keep in mind:
+
+- Complexity, it's a price to pay for the flexibility if provides
+- YAML proliferation, which is good or bad depending where you stand on YAML ;)
+- You need to know K8s well
+
+Complexity is addressed by moving it to specialized platfor teams. For YAML I would love to see more push for integrating YAML generation like CDK8s or others. I personally see reliacne on K8s as a benefit, but for those of us who are not yet comfotrable with Kubernetes, this makes the learning curve a bit steaper.
+
+In summary, Crossplane is a great product, it appeared in the right time and solves decades all problem in a very innovative and future proof way. Got check it out!
