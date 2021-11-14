@@ -1,6 +1,6 @@
-# Infrastructure as Code: the next paradigm shift 
+# Infrastructure as Code: the next paradigm shift
 
-## Introduction 
+## Introduction
 
 In this blog we will look at the evolution of software infrastructure; provisioning, delivery and maintenance.
 
@@ -17,7 +17,7 @@ Every once in a while software industry is shaped by significant events called [
 
 Let's examine how each wave of changes shaped the software landscape:
 
-In the early days of virtualizaiton, developers would produce software in long watefall development cycles, mostly based on requirements documentation. Ops Teams in the same time would rack and stack servers, provision infrastucture components, install all the things, configure etc etc. Typically both teams would work in a disconnected fashoin, opening tickets and communicating via long email chains. Those were the darg ages. 
+In the early days of virtualizaiton, developers would produce software in long watefall development cycles, mostly based on requirements documentation. Ops Teams in the same time would rack and stack servers, provision infrastucture components, install all the things, configure etc etc. Typically both teams would work in a disconnected fashoin, opening tickets and communicating via long email chains. Those were the darg ages.
 
 ![Old Days](media/old-days.png)
 
@@ -25,9 +25,9 @@ Next came agile revolution and with it beginning of the DevOps culture. Now deve
 
 ![Bridge DevOps](media/Bridge.sketchpad.png)
 
-Along with increased usage of public cloud and more robust automation, things started to fall into right places. The tool of choice for most of the OPS Teams was terraform. Compared to the situation from a few years ago, this is a huge progress. The amount of infrastructure created grows exponentially. 
+Along with increased usage of public cloud and more robust automation, things started to fall into right places. The tool of choice for most of the OPS Teams was terraform. Compared to the situation from a few years ago, this is a huge progress. The amount of infrastructure created grows exponentially.
 
-For a long time, this picture is almost perfect... almost. So what is missing? Well, the experience for both Dev and Ops falls a bit short. Meticulously created infrasturcture starts to drift, requires a lot of effort and maintenance overhead. Developers on the other hand must learn new languages and struggle to incorporate the Ops tooling into their workflows. 
+For a long time, this picture is almost perfect... almost. So what is missing? Well, the experience for both Dev and Ops falls a bit short. Meticulously created infrasturcture starts to drift, requires a lot of effort and maintenance overhead. Developers on the other hand must learn new languages and struggle to incorporate the Ops tooling into their workflows.
 Community rallies around and comes up with all kinds of creative solutions, drift detection, more autmation, observability etc. All those tools and projects are great, but not really standardised.
 
 How to improve already good process? How to make one more leap to make somehting good, great? Answer came, like most good ansewers, from within the community itself. Remember how we talked about paradigm shifts? One of them was containerization and containers orchestration, this enabled **standardization** of to lesser extent packaging (contianer images) and runtime (Kubernetes pods) concerns. Now we have all the standards and tools at our fingertips, just one final touch needed to make it work seemlesly together. Here is how, IMO, [Crossplane](https://crossplane.io/) is the missing link in the infrastructure as code evolution.
@@ -192,7 +192,7 @@ We have seen how Crossplane can help make infrastructure provisioning and manage
 - Self-Service
 - Increased Automation
 - Standardized collaboration
-- Ubiquitous language (K8s API) 
+- Ubiquitous language (K8s API)
 
 What I like most about Crossplane is that it's build with the DevOps culture in mind by promoting loosly coupled collaboration between Applications Teams and Platform Teams. The resource model, packaging, configuration are well thought out.
 

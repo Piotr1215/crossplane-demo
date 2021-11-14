@@ -3,7 +3,7 @@
 yamlDiagram {
   BackGroundColor transparent
   node {
-    BackGroundColor #f3807b
+    BackGroundColor #35d0ba
   }
 }
 </style>
