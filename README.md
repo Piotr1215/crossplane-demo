@@ -49,7 +49,7 @@ For me, the best part about Crossplane is that it seemlesly enables colloboratio
 
 Let's look how Crossplane component model look like. A word of warrning, if you are new to Kubernetes this might be overwhelming, but there is value in making an effort to understand it. Below diagram shows crossplane component model and its basic intetactions.
 
-![Crossplane Components](http://www.plantuml.com/plantuml/proxy?cache=yes&src=https://raw.githubusercontent.com/Piotr1215/crossplane-demo/master/diagrams/crossplane-components.puml&fmt=svg)
+![Crossplane Components](http://www.plantuml.com/plantuml/proxy?cache=yes&src=https://raw.githubusercontent.com/Piotr1215/crossplane-demo/master/diagrams/crossplane-components.puml&fmt=png)
 
 ## Demo Scenario
 
