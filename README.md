@@ -1,5 +1,10 @@
 # Infrastructure as Code: the next big shift is here
 
+This content is published as blogs on 
+
+- medium: [friend link](https://itnext.io/infrastructure-as-code-the-next-big-shift-is-here-9215f0bda7ce?source=friends_link&sk=9917683d7111c484a0ab6abda59fd3e4), so no paywall :)
+- [Hackernoon](https://hackernoon.com/infrastructure-as-code-the-next-big-shift-is-here), they've introduced a pretty neat reading feature if you prefer to listen rather than read
+
 ## Introduction
 
 In this blog, we will look at the evolution of software infrastructure; provisioning, delivery and maintenance.
