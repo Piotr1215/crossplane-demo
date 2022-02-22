@@ -1,6 +1,6 @@
 # Infrastructure as Code: the next big shift is here
 
-This content is published as blogs on 
+This content is published as blogs on
 
 - medium: [friend link](https://itnext.io/infrastructure-as-code-the-next-big-shift-is-here-9215f0bda7ce?source=friends_link&sk=9917683d7111c484a0ab6abda59fd3e4), so no paywall :)
 - [Hackernoon](https://hackernoon.com/infrastructure-as-code-the-next-big-shift-is-here), they've introduced a pretty neat reading feature if you prefer to listen rather than read
@@ -15,10 +15,10 @@ If you are interested in modern DevOps and SRE practices, this article is for yo
 
 Every once in a while software industry is shaped by significant events called [Paradigm Shift](https://en.wikipedia.org/wiki/Paradigm_shift). Here are a few such events that made Infrastructure as Code what it is today:
 
--   Virtualization
--   Containerisation and containers orchestration
--   Public Cloud Infrastructure
--   DevOps Culture
+- Virtualization
+- Containerisation and containers orchestration
+- Public Cloud Infrastructure
+- DevOps Culture
 
 ### Infrastructure provisioning: evolution
 
@@ -69,9 +69,9 @@ The demo scenario highlights Crossplane’s composite functionality. Using compo
 
 The scenario flow:
 
--   deploy RDS
--   deploy EKS
--   highlight the main steps of creating and using a composition
+- deploy RDS
+- deploy EKS
+- highlight the main steps of creating and using a composition
 
 ### Prerequisites
 
@@ -201,20 +201,21 @@ Just in case anyone is wondering, this article is not sponsored by Upbound (the 
 
 We have seen how Crossplane can help make infrastructure provisioning and management easier. Here are a few benefits I would like to highlight.
 
--   Composable Infrastructure
--   Self-Service
--   Increased Automation
--   Standardized collaboration
--   Ubiquitous language (K8s API)
+- Composable Infrastructure
+- Self-Service
+- Increased Automation
+- Standardized collaboration
+- Ubiquitous language (K8s API)
 
 What I like most about Crossplane is that it’s built with the DevOps culture in mind by promoting loosely coupled collaboration between Applications Teams and Platform Teams. The resource model, packaging, configuration are well thought out.
 
 There are also a few challenges to keep in mind:
 
--   Complexity, it’s a price to pay for the flexibility it provides
--   YAML proliferation, which is good or bad depending on where you stand on YAML ;)
--   You need to know K8s well
+- Complexity, it’s a price to pay for the flexibility it provides
+- YAML proliferation, which is good or bad depending on where you stand on YAML ;)
+- You need to know K8s well
 
 Complexity is addressed by moving it to specialized Platform Teams. For YAML I would love to see more push for integrating YAML generation like CDK8s or others. I see reliance on K8s as a benefit, but for those of us who are not yet comfortable with Kubernetes, this makes the learning curve a bit steeper.
 
 In summary, Crossplane is a great product, it appeared at the right time and solves decades all problems in a very innovative and future proof way. Go check it out!
+
